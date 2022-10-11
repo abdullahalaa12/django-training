@@ -76,8 +76,8 @@
 `Michael Jackson <QuerySet [<Album: Got to Be There>, <Album: New Album>]>`
 
 ### 2:
-`In [58]: for artist in Artist.objects.all():
-    ...:     print(artist, Album.objects.filter(artist=artist.id))
+`In [11]: for artist in Artist.objects.all():
+    ...:     print(artist, Album.objects.select_related('artist').filter(artist=artist.id))
 `
 
 `Coldplay <QuerySet [<Album: Parachutes>]>`
