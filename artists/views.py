@@ -8,7 +8,7 @@ from .models import Artist
 # Create your views here.
 
 def index(request):
-    artists_list = Artist.objects.all()
+    artists_list = Artist.objects.prefetch_related('album_set')
     context = {'artists_list': artists_list}
     return render(request, 'artists/index.html', context)
 
