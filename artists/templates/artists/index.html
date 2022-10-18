@@ -19,7 +19,7 @@
                     {% for album in artist.album_set.all %}
                         <li>id: {{album.id}}</li>
                         <li>Name: {{album.name}}</li>
-                        <li>Creation Time: {{album.creation_date}}</li>
+                        <li>Creation Time: {{album.created}}</li>
                         <li>Release Time: {{album.release_date}}</li>
                         <li>Cost: {{album.cost}}</li>
                         <hr>
