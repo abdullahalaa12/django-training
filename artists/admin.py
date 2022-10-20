@@ -2,7 +2,6 @@ from django.contrib import admin
 from .models import Artist
 from albums.models import Album
 
-# Register your models here.
 
 @admin.display(description='# Approved Albums')
 def approved_albums_count(obj):
