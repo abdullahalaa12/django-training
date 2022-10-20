@@ -6,19 +6,20 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <style>
+        .errorlist {
+            color: red;
+            font-weight: bold;
+            list-style: none;
+            padding: 0;
+        }
+    </style>
 </head>
 <body>
     <h1>Create a new Artist</h1>
-    {% if error_msg %}
-        <p style="color: red; font-weight: bold">{{error_msg}}</p>
-    {% endif %}
     <form action="{% url 'artists:create' %}" method="post">
         {% csrf_token %}
-        <label for="stage-name">Stage Name: </label>
-        <input name="stage_name" id="stage-name" type="text" placeholder="stage name">
-        <label for="social-link">Social Link: </label>
-        <input name="social_link" id="social-link" type="text" placeholder="social link">
-        <br>
+        {{ form.as_p }}
         <input type="submit" value="Create">
     </form>
 </body>

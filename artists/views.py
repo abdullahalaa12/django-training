@@ -1,27 +1,24 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.views.generic import ListView, CreateView
 
 from .models import Artist
 
 
 # Create your views here.
 
-def index(request):
-    artists_list = Artist.objects.prefetch_related('album_set')
-    context = {'artists_list': artists_list}
-    return render(request, 'artists/index.html', context)
+
+class Index(ListView):
+    queryset = Artist.objects.prefetch_related('album_set')
+    context_object_name = 'artists_list'
+    template_name = 'artists/index.html'
 
 
-def create(request):
-    if request.method == 'GET':
-        return render(request, 'artists/create.html')
+class Create(CreateView):
+    model = Artist
+    fields = ['stage_name', 'social_link']
+    template_name = 'artists/create.html'
 
-    stage_name = request.POST['stage_name']
-    social_link = request.POST['social_link']
-
-    try:
-        Artist.objects.create(stage_name=stage_name, social_link=social_link)
-        return HttpResponseRedirect(reverse('artists:index'))
-    except Exception as e:
-        return render(request, 'artists/create.html', {'error_msg': str(e)})
+    def get_success_url(self):
+        return reverse('artists:index')
