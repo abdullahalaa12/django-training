@@ -4,7 +4,7 @@ from .models import Album
 # Register your models here.
 
 class AlbumAdmin(admin.ModelAdmin):
-    readonly_fields = ('creation_date',)
+    readonly_fields = ('created', 'modified',)
 
 
 admin.site.register(Album, AlbumAdmin)

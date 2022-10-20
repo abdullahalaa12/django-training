@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Artists</title>
+</head>
+<body>
+{% if artists_list %}
+    <ul>
+        {% for artist in artists_list %}
+            <li>id: {{artist.id}}</li>
+            <li>Stage name: {{artist.stage_name}}</li>
+            <li>Social: {{artist.social_link}}</li>
+            <li>Albums:
+                <ul>
+                    {% for album in artist.album_set.all %}
+                        <li>id: {{album.id}}</li>
+                        <li>Name: {{album.name}}</li>
+                        <li>Creation Time: {{album.created}}</li>
+                        <li>Release Time: {{album.release_date}}</li>
+                        <li>Cost: {{album.cost}}</li>
+                        <hr>
+                    {% endfor %}
+                </ul>
+            </li>
+            <hr>
+        {% endfor %}
+    </ul>
+{% endif %}
+</body>
+</html>

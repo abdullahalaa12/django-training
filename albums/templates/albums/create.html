@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Create a new Album</h1>
+    {% if error_msg %}
+        <p style="color: red; font-weight: bold">{{error_msg}}</p>
+    {% endif %}
+    <form action="{% url 'albums:create' %}" method="post">
+        {% csrf_token %}
+        <label for="select-artist">Artist: </label>
+        <select name="artist" id="select-artist">
+            {% for artist in artists_list %}
+                <option value="{{artist.id}}">{{artist.stage_name}}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <label for="name-input">Name:</label>
+        <input name="name" id="name-input" type="text">
+        <br>
+        <label for="date-input">Release date:</label>
+        <input name="release_date" id="date-input" type="datetime-local">
+        <br>
+        <label for="cost-input">Cost:</label>
+        <input name="cost" id="cost-input" type="number" step=".01">
+        <br>
+        <input type="submit" value="create">
+    </form>
+</body>
+</html>
