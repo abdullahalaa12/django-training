@@ -1,5 +1,6 @@
 from django.urls import reverse
 from django.views.generic import ListView, CreateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Artist
 
@@ -10,7 +11,7 @@ class Index(ListView):
     template_name = 'artists/index.html'
 
 
-class Create(CreateView):
+class Create(LoginRequiredMixin, CreateView):
     model = Artist
     fields = ['stage_name', 'social_link']
     template_name = 'artists/create.html'
