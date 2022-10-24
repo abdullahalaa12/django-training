@@ -1,11 +1,12 @@
 from django.db import models
 from django.db.models import Count, Q
 
+
 # Create your models here.
 
 class ArtistManager(models.Manager):
     def get_queryset(self):
-        return super().get_queryset().annotate(approved_albums = Count('album__id', filter=Q(album__is_approved=True)))
+        return super().get_queryset().annotate(approved_albums=Count('album__id', filter=Q(album__is_approved=True)))
 
 
 class Artist(models.Model):

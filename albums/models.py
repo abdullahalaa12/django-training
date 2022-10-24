@@ -1,10 +1,11 @@
 from django.db import models
-from django.utils import timezone
+from django.core.validators import FileExtensionValidator
 
 from model_utils.models import TimeStampedModel
-
-# Create your models here.
 from artists.models import Artist
+
+from imagekit.models import ImageSpecField
+from pilkit.processors import Thumbnail
 
 
 class Album(TimeStampedModel):
@@ -18,3 +19,17 @@ class Album(TimeStampedModel):
     def __str__(self):
         return self.name
 
+
+class Song(models.Model):
+    album = models.ForeignKey(Album, on_delete=models.CASCADE)
+
+    name = models.CharField(max_length=30, default=album.name)
+    image = models.ImageField(blank=False, null=False, upload_to='static/albums/images')
+    thumbnail = ImageSpecField(source='image',
+                               processors=[Thumbnail(100, 50)],
+                               format='JPEG',
+                               options={'quality': 60})
+    audio = models.FileField(blank=False, null=False,
+                             upload_to='static/albums/audios',
+                             help_text='.wav, .mp3',
+                             validators=[FileExtensionValidator(allowed_extensions=['mp3', 'wav'])])

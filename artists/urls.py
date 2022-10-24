@@ -3,6 +3,6 @@ from . import views
 
 app_name = 'artists'
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('create', views.create, name='create'),
+    path('', views.Index.as_view(), name='index'),
+    path('create', views.Create.as_view(), name='create'),
 ]

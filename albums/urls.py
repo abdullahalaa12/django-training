@@ -3,5 +3,5 @@ from . import views
 
 app_name = 'albums'
 urlpatterns = [
-    path('create', views.create, name='create'),
+    path('create', views.Create.as_view(), name='create'),
 ]

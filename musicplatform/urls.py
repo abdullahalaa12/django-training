@@ -15,9 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from django.contrib.auth.views import LoginView
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     path('artists/', include('artists.urls')),
     path('albums/', include('albums.urls')),
+    path('accounts/login/', LoginView.as_view(next_page='artists:index'), name='login'),
     path('admin/', admin.site.urls),
-]
+] + staticfiles_urlpatterns()
