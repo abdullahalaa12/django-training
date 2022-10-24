@@ -1,5 +1,9 @@
-from django.urls import reverse
-from django.views.generic import ListView, CreateView
-from django.contrib.auth.mixins import LoginRequiredMixin
-
 from .models import Artist
+
+from .serializers import ArtistSerializer
+from rest_framework import generics
+
+
+class Index(generics.ListCreateAPIView):
+    queryset = Artist.objects.all()
+    serializer_class = ArtistSerializer
