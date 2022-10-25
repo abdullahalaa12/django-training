@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'albums',
     'imagekit',
     'rest_framework',
+    'django_extensions',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
