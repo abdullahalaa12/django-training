@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'artists',
     'albums',
+    'users',
     'imagekit',
     'rest_framework',
     'django_extensions',
