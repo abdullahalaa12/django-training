@@ -46,7 +46,7 @@ def test_detail_put_authenticated(auth_client, user_data_1):
     url = reverse('users:detail', kwargs={'pk': user_data_1.pk})
 
     username = 'updated_username'
-    email = 'updated_email'
+    email = 'updated_email@gmail.com'
     bio = 'updated_bio'
     client = auth_client(user_data_1)
     response = client.put(url, {'username': username, 'email': email, 'bio': bio})
@@ -75,7 +75,7 @@ def test_detail_put_non_authenticated(auth_client, user_data_1):
     url = reverse('users:detail', kwargs={'pk': user_data_1.pk})
 
     username = 'updated_username'
-    email = 'updated_email'
+    email = 'updated_email@gmail.com'
     bio = 'updated_bio'
     client = auth_client()
     response = client.put(url, {'username': username, 'email': email, 'bio': bio})
