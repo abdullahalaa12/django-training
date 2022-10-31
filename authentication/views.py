@@ -5,6 +5,7 @@ from rest_framework.authentication import BasicAuthentication
 from rest_framework.permissions import AllowAny
 from django.contrib.auth import get_user_model
 from users.serializers import UserSerializer as DefaultUserSerializer
+from .serializers import RegisterSerializer
 
 # Create your views here.
 
@@ -12,7 +13,7 @@ from users.serializers import UserSerializer as DefaultUserSerializer
 class Register(generics.CreateAPIView):
     model = get_user_model()
     permission_classes = [AllowAny, ]
-    serializer_class = DefaultUserSerializer
+    serializer_class = RegisterSerializer
 
 
 class Login(KnoxLoginView):
