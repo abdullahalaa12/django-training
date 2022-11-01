@@ -7,7 +7,7 @@ User = get_user_model()
 
 
 @pytest.mark.django_db
-class TestUsers:
+class TestDetail:
     username = 'updated_username'
     email = 'updated_email@gmail.com'
     bio = 'updated_bio'
