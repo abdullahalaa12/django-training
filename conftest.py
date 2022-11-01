@@ -3,8 +3,15 @@ from rest_framework.test import APIClient
 from knox.models import AuthToken
 
 from django.contrib.auth import get_user_model
+from artists.models import Artist
 
 User = get_user_model()
+
+
+@pytest.fixture
+def artist_data_1():
+    artist = Artist.objects.create(stage_name='Michael Jackson', social_link='https://twitter.com/michaeljackson')
+    return artist
 
 
 @pytest.fixture
