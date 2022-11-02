@@ -8,6 +8,11 @@ from imagekit.models import ImageSpecField
 from pilkit.processors import Thumbnail
 
 
+class ApprovedAlbumsManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(is_approved=True)
+
+
 class Album(TimeStampedModel):
     artist = models.ForeignKey(Artist, on_delete=models.CASCADE)
 
@@ -15,6 +20,9 @@ class Album(TimeStampedModel):
     release_date = models.DateTimeField(blank=False, null=False)
     cost = models.DecimalField(max_digits=5, decimal_places=2, blank=False, null=False)
     is_approved = models.BooleanField(default=False, help_text='Approve the album if its name is not explicit')
+
+    objects = models.Manager()
+    approved_albums = ApprovedAlbumsManager()
 
     def __str__(self):
         return self.name
