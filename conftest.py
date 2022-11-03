@@ -35,7 +35,8 @@ def album_data_1(artist_data_1):
     artist = Album.objects.create(name='Bad',
                                   release_date=timezone.now(),
                                   cost=699.99,
-                                  artist=artist_data_1)
+                                  artist=artist_data_1,
+                                  is_approved=True)
     return artist
 
 
