@@ -11,15 +11,26 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import environ
+import os
+from datetime import timedelta
+
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False)
+)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Take environment variables from .env file
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-1w&$t-ao!1y1i8ueu9+&+dk%y&&zs$%ui194gdh-s&l&x*x6#m'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -58,7 +69,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'musicplatform.urls'
 
-import os
 
 TEMPLATES = [
     {
@@ -139,3 +149,24 @@ REST_FRAMEWORK = {
     ],
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
 }
+
+# Celery settings
+CELERY_CONF_BROKER_URL = env('REDIS_SERVER_ADDRESS')
+CELERY_CONF_RESULT_BACKEND = env('REDIS_SERVER_ADDRESS')
+
+# Define the beat_schedule
+CELERY_CONF_BEAT_SCHEDULE = {
+    'check-artist-created-album-every-24-hours': {
+        'task': 'tasks.check_artists_created_albums_past_30_days',
+        'schedule': timedelta(hours=24)
+    },
+}
+
+
+# Email settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')

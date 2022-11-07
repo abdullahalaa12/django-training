@@ -3,6 +3,7 @@ from django.core.validators import FileExtensionValidator
 
 from model_utils.models import TimeStampedModel
 from artists.models import Artist
+from .tasks import send_mail_task
 
 from imagekit.models import ImageSpecField
 from pilkit.processors import Thumbnail
@@ -26,6 +27,10 @@ class Album(TimeStampedModel):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        send_mail_task.delay(self.artist.user.email, self.artist.stage_name, self.name).backend
+        return super().save(*args, **kwargs)
 
 
 class Song(models.Model):
