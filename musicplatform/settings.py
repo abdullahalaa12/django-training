@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 import environ
 import os
+from datetime import timedelta
 
 env = environ.Env(
     # set casting, default value
@@ -152,6 +153,15 @@ REST_FRAMEWORK = {
 # Celery settings
 CELERY_CONF_BROKER_URL = env('REDIS_SERVER_ADDRESS')
 CELERY_CONF_RESULT_BACKEND = env('REDIS_SERVER_ADDRESS')
+
+# Define the beat_schedule
+CELERY_CONF_BEAT_SCHEDULE = {
+    'check-artist-created-album-every-24-hours': {
+        'task': 'tasks.check_artists_created_albums_past_30_days',
+        'schedule': timedelta(hours=24)
+    },
+}
+
 
 # Email settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
